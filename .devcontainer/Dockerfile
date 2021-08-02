@@ -1,0 +1,37 @@
+FROM amazonlinux
+RUN yum install -y yum-utils
+RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+RUN yum install -y tar unzip zip gcc-c++ libcurl-devel zlib-devel openssl-devel cmake3 git terraform
+
+RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip
+RUN unzip awscliv2.zip
+RUN ./aws/install
+RUN rm awscliv2.zip
+RUN rm -r aws
+
+RUN curl -L https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -o awssamcli.zip
+RUN unzip awssamcli.zip -d sam-installation
+RUN ./sam-installation/install
+RUN rm awssamcli.zip
+RUN rm -r sam-installation
+
+WORKDIR /root
+RUN git clone https://github.com/awslabs/aws-lambda-cpp.git
+WORKDIR /root/aws-lambda-cpp
+RUN mkdir build
+WORKDIR /root/aws-lambda-cpp/build
+RUN cmake3 .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_INSTALL_PREFIX=~/out
+RUN make && make install
+
+WORKDIR /root
+RUN git clone --recurse-submodules -j8 https://github.com/aws/aws-sdk-cpp.git
+WORKDIR /root/aws-sdk-cpp
+RUN mkdir build
+WORKDIR /root/aws-sdk-cpp/build
+RUN cmake3 .. -DBUILD_ONLY="s3;dynamodb" \
+ -DBUILD_SHARED_LIBS=OFF \
+ -DENABLE_UNITY_BUILD=ON \
+ -DCMAKE_BUILD_TYPE=Release \
+ -DCMAKE_INSTALL_PREFIX=~/out
+RUN make && make install
