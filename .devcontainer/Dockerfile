@@ -9,12 +9,6 @@ RUN ./aws/install
 RUN rm awscliv2.zip
 RUN rm -r aws
 
-RUN curl -L https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip -o awssamcli.zip
-RUN unzip awssamcli.zip -d sam-installation
-RUN ./sam-installation/install
-RUN rm awssamcli.zip
-RUN rm -r sam-installation
-
 WORKDIR /root
 RUN git clone https://github.com/awslabs/aws-lambda-cpp.git
 WORKDIR /root/aws-lambda-cpp
@@ -30,8 +24,8 @@ WORKDIR /root/aws-sdk-cpp
 RUN mkdir build
 WORKDIR /root/aws-sdk-cpp/build
 RUN cmake3 .. -DBUILD_ONLY="s3;dynamodb" \
- -DBUILD_SHARED_LIBS=OFF \
- -DENABLE_UNITY_BUILD=ON \
- -DCMAKE_BUILD_TYPE=Release \
- -DCMAKE_INSTALL_PREFIX=~/out
+  -DBUILD_SHARED_LIBS=OFF \
+  -DENABLE_UNITY_BUILD=ON \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=~/out
 RUN make && make install

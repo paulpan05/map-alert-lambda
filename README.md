@@ -24,3 +24,8 @@ To update function code:
 ```sh
 aws lambda update-function-code --function-name hello-world --zip-file fileb://hello.zip
 ```
+
+To build project, create build directory and ```cd``` into the directory, then run:
+```sh
+cmake3 .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/out
+```

@@ -1,4 +1,6 @@
 {
-  "dockerFile": "Dockerfile",
+  "dockerComposeFile": "docker-compose.yml",
   "extensions": ["ms-vscode.cpptools-extension-pack"],
+  "service": "map-alert-lambda",
+  "workspaceFolder": "/app",
 }
