@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+aws --endpoint-url http://localhost:4566 lambda delete-function \
+--function-name hello-world \
+
+aws --endpoint-url http://localhost:4566 iam delete-role \
+--role-name lambda-cpp-demo

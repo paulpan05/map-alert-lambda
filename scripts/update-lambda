@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+cd ../build
+
+aws --endpoint-url http://localhost:4566 lambda update-function-code \
+--function-name hello-world \
+--zip-file fileb://hello.zip

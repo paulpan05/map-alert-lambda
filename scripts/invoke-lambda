@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+aws --endpoint-url http://localhost:4566 lambda invoke \
+--function-name hello-world \
+--payload '{ }' \
+output.txt
