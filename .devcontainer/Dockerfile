@@ -3,7 +3,7 @@ RUN yum install -y yum-utils
 RUN yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
 RUN yum install -y tar unzip zip gcc-c++ libcurl-devel zlib-devel openssl-devel cmake3 git terraform
 
-RUN curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip
+RUN arch=$(uname -m); curl https://awscli.amazonaws.com/awscli-exe-linux-${arch}.zip -o awscliv2.zip
 RUN unzip awscliv2.zip
 RUN ./aws/install
 RUN rm awscliv2.zip

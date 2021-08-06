@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+cd ~
+
+sudo dnf install -y cmake libcurl-devel python3-devel
+arch=$(uname -m)
+curl https://awscli.amazonaws.com/awscli-exe-linux-${arch}.zip -o awscliv2.zip
+unzip awscliv2.zip
+sudo ./aws/install
+rm awscliv2.zip
+rm -r aws
+
+sudo pip3 install localstack
+
+case $arch in
+  x86_64) arch=amd64 ;;
+  aarch64) arch=arm64 ;;
+  *) arch=$arch ;;
+esac
+curl https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_${arch}.zip -o terraform.zip
+unzip terraform.zip
+sudo mv terraform /usr/bin
+rm terraform.zip
+
+aws configure
