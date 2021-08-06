@@ -1,9 +1,8 @@
 #!/usr/bin/env sh
 
-cd ..
 mkdir -p build
 cd build
-cmake3 .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/out -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=~/out -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 make && make aws-lambda-package-hello
 echo "{" > trust-policy.json
 echo "  \"Version\": \"2012-10-17\"," >> trust-policy.json
